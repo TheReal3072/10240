@@ -26,6 +26,10 @@ function LocalStorageManager() {
   this.storage = supported ? window.localStorage : window.fakeStorage;
 }
 
+function LocalDifficulty () {
+  return $("difficulty").value;
+}
+
 LocalStorageManager.prototype.localStorageSupported = function () {
   var testKey = "test";
   var storage = window.localStorage;

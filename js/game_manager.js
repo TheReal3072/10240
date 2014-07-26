@@ -1,10 +1,37 @@
-function GameManager(size, InputManager, Actuator, StorageManager) {
+function GameManager(size, InputManager, Actuator, StorageManager, difficulty) {
   this.size           = size; // Size of the grid
   this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
 
-  this.startTiles     = 2;
+  switch (difficulty){
+    case "easy":
+      dStartTiles   = 16;
+      dTilesPerMove = 1;
+    break;
+
+    case "medium":
+      dStartTiles   = 8;
+      dTilesPerMove = 2;
+    break;
+
+    case "hard":
+      dStartTiles   = 2;
+      dTilesPerMove = 5;
+    break;
+
+    case "impossible":
+      dStartTiles   = 2;
+      dTilesPerMove = 10;
+    break;
+
+    default:
+      dStartTiles   = 16;
+      dTilesPerMove = 1;
+    break; 
+  }
+  this.startTiles     = dStartTiles;
+  this.tilesPerMove   = dTilesPerMove;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -28,7 +55,11 @@ GameManager.prototype.keepPlaying = function () {
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
-  return this.over || (this.won && !this.keepPlaying);
+  if (this.over || (this.won && !this.keepPlaying)) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 // Set up the game
@@ -43,12 +74,14 @@ GameManager.prototype.setup = function () {
     this.over        = previousState.over;
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
+    this.difficulty  = previousState.difficulty;
   } else {
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
+    this.difficulty  = "easy";
 
     // Add the initial tiles
     this.addStartTiles();
@@ -68,7 +101,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var value = Math.random() < 0.9 ? 5 : 10;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -167,7 +200,7 @@ GameManager.prototype.move = function (direction) {
           self.score += merged.value;
 
           // The mighty 2048 tile
-          if (merged.value === 2048) self.won = true;
+          if (merged.value === 2560) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
@@ -180,7 +213,12 @@ GameManager.prototype.move = function (direction) {
   });
 
   if (moved) {
-    this.addRandomTile();
+    var rtilespermove = Math.floor((Math.random()*this.tilesPerMove)+1);
+    for (var i = 1; i <= rtilespermove; i++) {
+      
+      this.addRandomTile();
+    };
+    
 
     if (!this.movesAvailable()) {
       this.over = true; // Game over!

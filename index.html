@@ -2,15 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>2048</title>
+  <title>2560 - A Better 2048</title>
 
-  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link href="style/main.css?v=2" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
-  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
-  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -19,15 +16,23 @@
 <body>
   <div class="container">
     <div class="heading">
-      <h1 class="title">2048</h1>
+      <h1 class="title">2560</h1>
       <div class="scores-container">
         <div class="score-container">0</div>
         <div class="best-container">0</div>
       </div>
+      <div class="selectbox">
+        <select name="difficulty" onchange="window.location.hash = getDifficulty(); GAME.restart(); window.location.reload()" id="difficulty">
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+          <option value="impossible">impossible</option>
+        </select>
+      </div>
     </div>
 
     <div class="above-game">
-      <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+      <p class="game-intro">Join the numbers and get to the <strong>2560 tile!</strong></p>
       <a class="restart-button">New Game</a>
     </div>
 
@@ -46,11 +51,6 @@
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
-        </div>
-        <div class="grid-row">
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
           <div class="grid-cell"></div>
         </div>
         <div class="grid-row">
@@ -58,8 +58,24 @@
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
         </div>
         <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
           <div class="grid-cell"></div>
@@ -77,11 +93,41 @@
     </p>
     <hr>
     <p>
-    <strong class="important">Note:</strong> This site is the official version of 2048. You can play it on your phone via <a href="http://git.io/2048">http://git.io/2048.</a> All other apps or sites are derivatives or fakes, and should be used with caution.
+    <strong class="important">Note:</strong> This site is <strong>NOT</strong> the official version of 2048. It is based on the git <a href="http://git.io/2048">http://git.io/2048.</a> The git is open source and I took the code and made it better.
+    </p>
+    <p>
+      <strong>Full list of changes:</strong>
+      <ul>
+        <li>Bigger board: The board of 2560 is 5*5, unlike the board of 2048 which is 4 by 4.</li>
+        <li>The numbers are different: The numbers of 2560 are:
+          <ul>
+            <li>5</li>
+            <li>10</li>
+            <li>20</li>
+            <li>40</li>
+            <li>80</li>
+            <li>160</li>
+            <li>320</li>
+            <li>640</li>
+            <li>1280</li>
+            <li><strong>2560</strong></li>
+          </ul>
+          (<strong>9 steps to win</strong>, unlike 10 steps in 2048)
+        </li>
+        <li>Better colors: The colors of 2560 are variations of <i class="blue-green">blue-green</i>, unlike the boring <i class="yellow">yellow</i> of 2048.
+        </li>
+        <li>
+          Difficulty levels: In 2560 you have 4 different ways to play: Easy is very easy to win, but once you've done that try to play on Medium or Hard mode. 
+          <br /> 
+          Impossible is... well, (almost) impossible.
+        </li>
+
+
+      </ul>
     </p>
     <hr>
     <p>
-    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+    Created by <a href="http://reuven.karasik.org" target="_blank">Reuven Karasik.</a> Based on <a href="http://git.io/2048" target="_blank">2048 by Gabriele Cirulli</a>, who published his amazing app open source on Github. God knows I couldn't make it from scratch.
     </p>
   </div>
 
@@ -94,6 +140,7 @@
   <script src="js/tile.js"></script>
   <script src="js/local_storage_manager.js"></script>
   <script src="js/game_manager.js"></script>
+  <script src="js/difficulty.js"></script>
   <script src="js/application.js"></script>
 </body>
 </html>

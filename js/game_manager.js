@@ -16,13 +16,13 @@ function GameManager(size, InputManager, Actuator, StorageManager, difficulty) {
     break;
 
     case "hard":
-      dStartTiles   = 2;
-      dTilesPerMove = 5;
+      dStartTiles   = 4;
+      dTilesPerMove = 4;
     break;
 
     case "impossible":
       dStartTiles   = 2;
-      dTilesPerMove = 10;
+      dTilesPerMove = 8;
     break;
 
     default:
@@ -101,7 +101,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 5 : 10;
+    var value = Math.random() < 0.95 ? 5 : 10;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -199,8 +199,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty 2048 tile
-          if (merged.value === 2560) self.won = true;
+          // The mighty 40960 tile
+          if (merged.value === 40960) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }

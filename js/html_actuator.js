@@ -1,5 +1,3 @@
-
-
 function HTMLActuator() {
   this.tileContainer    = document.querySelector(".tile-container");
   this.scoreContainer   = document.querySelector(".score-container");
@@ -59,7 +57,7 @@ HTMLActuator.prototype.addTile = function (tile) {
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
-  if (tile.value > 2560) classes.push("tile-super");
+  if (tile.value > 41943040) classes.push("tile-super");
 
   this.applyClasses(wrapper, classes);
 
